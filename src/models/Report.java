@@ -55,11 +55,17 @@ public class Report {
     @Column(name = "content", nullable = false)
     private String content;
 
+    @Column(name = "like_count", nullable = false)
+    private Integer like_count;
+
     @Column(name = "created_at", nullable = false)
     private Timestamp created_at;
 
     @Column(name = "updated_at", nullable = false)
     private Timestamp updated_at;
+
+
+
 
     public Integer getId() {
         return id;
@@ -101,6 +107,13 @@ public class Report {
         this.content = content;
     }
 
+    public Integer getLike_count() {
+        return like_count;
+    }
+    public void setLike_count(Integer like_count) {
+        this.like_count = like_count;
+    }
+
     public Timestamp getCreated_at() {
         return created_at;
     }
@@ -116,4 +129,6 @@ public class Report {
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
     }
+
+
 }
