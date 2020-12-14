@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Employee;
+import models.Likes;
 import models.Report;
 import utils.DBUtil;
 
@@ -34,12 +36,33 @@ public class ReportsShowServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
+
+
+
         Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
+
+        Likes l = em.find(Likes.class, Integer.parseInt(request.getParameter("id")));
+
+        Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
+        long like_count = (long)em.createNamedQuery("getLikesCount", Long.class)
+                                           .setParameter("employee", login_employee)
+                                           .setParameter("report", r)
+                                           .getSingleResult();
+
+       // long like_count = 0;
 
         em.close();
 
+
+        request.setAttribute("like_count", like_count );
         request.setAttribute("report", r);
+        request.setAttribute("likes", l);
+
+
         request.setAttribute("_token", request.getSession().getId());
+        request.getSession().setAttribute("report_id" , r.getId());
+        request.getSession().setAttribute("likes_id" , l.getId());
+
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");
         rd.forward(request, response);

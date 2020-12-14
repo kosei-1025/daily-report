@@ -25,7 +25,11 @@
                         </tr>
                         <tr>
                             <th>いいね数</th>
-                            <td> <c:out value="${report.like_count}"/> </td>
+                            <td class="report_likes">
+                            <a href="<c:url value='/Likes/Index?report_id=${report.id}' />">
+                            <c:out  value="${report.like_count}" />
+                            </a>
+                            </td>
                         <tr>
                             <th>登録日時</th>
                             <td>
@@ -41,14 +45,17 @@
                     </tbody>
                 </table>
 
-                <c:choose>
-                        <c:when test="${sessionScope.login_employee.id == report.employee.id}">
-                            <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>
-                        </c:when>
-                        <c:otherwise>
-                            <p><a href="<c:url value="/reports/likecount?id=${report.id}" />">この日報にいいねする</a></p>
-                        </c:otherwise>
-                </c:choose>
+                <c:if test="${sessionScope.login_employee.id == report.employee.id}">
+                    <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>
+                </c:if>
+                  <c:if test="${sessionScope.login_employee.id != report.employee.id and like_count == 0 }" >
+                   <p><a href="<c:url value="/reports/likecount?id=${report.id}" />">この日報にいいねする</a></p>
+                  </c:if>
+
+
+
+
+
             </c:when>
             <c:otherwise>
                 <h2>お探しのデータは見つかりませんでした。</h2>

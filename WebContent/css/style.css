@@ -162,3 +162,16 @@ pre {
 h3 {
     font-size: larger;
 }
+
+table#likes_list th {
+    font-weight: bold;
+    padding: 10px 2%;
+}
+
+table#likes_list .likes_name{
+    width: 50%;
+}
+
+table#likes_list .likes_create_at{
+    width: 50%;
+}
